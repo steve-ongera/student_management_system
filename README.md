@@ -6,39 +6,89 @@ A comprehensive Student Management System built with **React**, **Node.js**, and
 
 ## Project Structure
 
+## Project Structure
+
 ```text
 students-management-system/
-├── frontend/                       
+├── frontend/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── Sidebar.jsx
 │   │   │   └── Navbar.jsx
+│   │   │
 │   │   ├── pages/
-│   │   │   ├── Dashboard.jsx
-│   │   │   ├── Library.jsx
-│   │   │   ├── HumanResources.jsx
-│   │   │   ├── Procurement.jsx
-│   │   │   ├── Inventory.jsx
-│   │   │   ├── HealthCenter.jsx
-│   │   │   ├── Transport.jsx
-│   │   │   └── Assets.jsx
+│   │   │   ├── Dashboard/
+│   │   │   │   └── Dashboard.jsx
+│   │   │   │
+│   │   │   ├── Library/
+│   │   │   │   ├── BooksList.jsx
+│   │   │   │   ├── BookForm.jsx
+│   │   │   │   ├── BorrowingsList.jsx
+│   │   │   │   ├── ReturnsList.jsx
+│   │   │   │   └── FinesList.jsx
+│   │   │   │
+│   │   │   ├── HumanResources/
+│   │   │   │   ├── EmployeesList.jsx
+│   │   │   │   ├── EmployeeForm.jsx
+│   │   │   │   ├── PayrollList.jsx
+│   │   │   │   ├── LeaveRequests.jsx
+│   │   │   │   └── PerformanceReviews.jsx
+│   │   │   │
+│   │   │   ├── Procurement/
+│   │   │   │   ├── RequisitionsList.jsx
+│   │   │   │   ├── SuppliersList.jsx
+│   │   │   │   ├── PurchaseOrdersList.jsx
+│   │   │   │   └── ApprovalsList.jsx
+│   │   │   │
+│   │   │   ├── Inventory/
+│   │   │   │   ├── StockItemsList.jsx
+│   │   │   │   ├── StockInForm.jsx
+│   │   │   │   ├── StockOutForm.jsx
+│   │   │   │   └── InventoryReports.jsx
+│   │   │   │
+│   │   │   ├── HealthCenter/
+│   │   │   │   ├── MedicalRecordsList.jsx
+│   │   │   │   ├── ClinicVisitsList.jsx
+│   │   │   │   └── EmergencyContactsList.jsx
+│   │   │   │
+│   │   │   ├── Transport/
+│   │   │   │   ├── VehiclesList.jsx
+│   │   │   │   ├── RoutesList.jsx
+│   │   │   │   ├── StudentAssignments.jsx
+│   │   │   │   └── GPSMonitoring.jsx
+│   │   │   │
+│   │   │   └── Assets/
+│   │   │       ├── AssetsList.jsx
+│   │   │       ├── MaintenanceList.jsx
+│   │   │       ├── DepreciationReport.jsx
+│   │   │       └── AssetReports.jsx
+│   │   │
 │   │   ├── styles/
 │   │   │   └── main.css
+│   │   │
 │   │   ├── App.jsx
-│   │   └── index.js
+│   │   └── main.jsx
+│   │
 │   └── package.json
 │
-├── backend/                        
-│   ├── routes/
-│   ├── controllers/
-│   ├── models/
+├── backend/
 │   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
 │   ├── server.js
+│   ├── .env
 │   └── package.json
 │
-└── database/                       
-    └── schema.sql
+├── database/
+│   └── schema.sql
+│
+├── .gitignore
+├── README.md
+└── package.json
 ```
+
 
 ---
 
