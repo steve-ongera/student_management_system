@@ -6,8 +6,6 @@ A comprehensive Student Management System built with **React**, **Node.js**, and
 
 ## Project Structure
 
-## Project Structure
-
 ```text
 students-management-system/
 ├── frontend/
