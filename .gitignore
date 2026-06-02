@@ -1,0 +1,17 @@
+node_modules/
+
+.env
+.env.local
+.env.production
+.env.development
+
+
+#logs
+logs*.logs
+
+#React
+frontend/node+modules/
+frontend/dist/
+
+#Backend 
+backend/node_modules/
