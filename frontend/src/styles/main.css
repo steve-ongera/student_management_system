@@ -3288,5 +3288,342 @@ a:hover {
   }
 }
 
+/* ============================================
+   DROPDOWN MENU STYLES
+   ============================================ */
 
+.dropdown-wrapper {
+  position: relative;
+}
+
+/* User Menu */
+.user-menu {
+  min-width: 280px;
+}
+
+.dropdown-user-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--gray-50);
+}
+
+.user-avatar-large {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--radius-full);
+}
+
+.user-details {
+  flex: 1;
+}
+
+.user-fullname {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.user-email {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+}
+
+.logout-item {
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--danger);
+}
+
+.logout-item:hover {
+  background-color: var(--danger-light);
+  color: var(--danger-dark);
+}
+
+/* Notifications Menu */
+.notifications-menu {
+  min-width: 380px;
+  max-width: 420px;
+}
+
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.dropdown-header h4 {
+  margin: 0;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+}
+
+.dropdown-link {
+  font-size: var(--font-size-xs);
+  color: var(--primary);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-link:hover {
+  text-decoration: underline;
+}
+
+.dropdown-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.dropdown-empty {
+  text-align: center;
+  padding: var(--space-6);
+  color: var(--text-tertiary);
+}
+
+.dropdown-empty i {
+  font-size: var(--font-size-3xl);
+  margin-bottom: var(--space-2);
+  display: block;
+}
+
+.dropdown-empty p {
+  margin: 0;
+  font-size: var(--font-size-sm);
+}
+
+.notification-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.notification-item:hover {
+  background-color: var(--gray-50);
+}
+
+.notification-item.unread {
+  background-color: var(--primary-light);
+}
+
+.notification-item.unread:hover {
+  background-color: var(--primary-100);
+}
+
+.notification-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--gray-100);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.notification-icon i {
+  color: var(--primary);
+  font-size: var(--font-size-base);
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-title {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.notification-message {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-1);
+}
+
+.notification-time {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+}
+
+.dropdown-footer {
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--border-light);
+  text-align: center;
+}
+
+/* Submenu Animation */
+.submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height var(--transition-slow) ease-out;
+}
+
+.submenu.open {
+  max-height: 500px;
+}
+
+/* Dark Mode Overrides */
+@media (prefers-color-scheme: dark) {
+  .dropdown-user-info {
+    background: var(--gray-800);
+  }
+  
+  .notification-item.unread {
+    background-color: rgba(59, 130, 246, 0.1);
+  }
+  
+  .notification-item.unread:hover {
+    background-color: rgba(59, 130, 246, 0.2);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .notifications-menu {
+    min-width: 320px;
+    position: fixed;
+    right: var(--space-2);
+    left: var(--space-2);
+    width: auto;
+  }
+  
+  .user-menu {
+    min-width: 260px;
+  }
+  
+  .user-info {
+    display: none;
+  }
+}
+
+/* Student Profile Styles */
+.student-profile {
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  background: linear-gradient(135deg, var(--primary-50), var(--primary-100));
+  border-bottom: 1px solid var(--border-light);
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--radius-full);
+}
+
+.profile-info h2 {
+  margin: 0 0 var(--space-2) 0;
+  font-size: var(--font-size-2xl);
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-4);
+}
+
+.info-item {
+  padding: var(--space-2) 0;
+}
+
+.info-item label {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-1);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.info-item p {
+  margin: 0;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+/* Attendance Buttons */
+.attendance-buttons {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.attendance-buttons .btn-sm {
+  padding: var(--space-1) var(--space-2);
+  font-size: var(--font-size-xs);
+}
+
+/* Student Link */
+.student-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+}
+
+.student-link:hover {
+  text-decoration: underline;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border-light);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .attendance-buttons {
+    flex-direction: column;
+  }
+  
+  .attendance-buttons .btn-sm {
+    width: 100%;
+  }
+}
 /* End of CSS File */

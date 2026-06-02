@@ -1,9 +1,11 @@
 // frontend/src/components/Sidebar.jsx
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const Sidebar = ({ isOpen }) => {
+  const location = useLocation();
   const [openMenus, setOpenMenus] = useState({
+    students: false,
     library: false,
     hr: false,
     procurement: false,
@@ -12,6 +14,40 @@ const Sidebar = ({ isOpen }) => {
     transport: false,
     assets: false
   });
+
+  // Auto-expand submenu based on current path
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const newOpenMenus = { ...openMenus };
+    
+    // Check which submenu should be open based on current path
+    if (currentPath.includes('/students')) {
+      newOpenMenus.students = true;
+    }
+    if (currentPath.includes('/library')) {
+      newOpenMenus.library = true;
+    }
+    if (currentPath.includes('/hr')) {
+      newOpenMenus.hr = true;
+    }
+    if (currentPath.includes('/procurement')) {
+      newOpenMenus.procurement = true;
+    }
+    if (currentPath.includes('/inventory')) {
+      newOpenMenus.inventory = true;
+    }
+    if (currentPath.includes('/health')) {
+      newOpenMenus.health = true;
+    }
+    if (currentPath.includes('/transport')) {
+      newOpenMenus.transport = true;
+    }
+    if (currentPath.includes('/assets')) {
+      newOpenMenus.assets = true;
+    }
+    
+    setOpenMenus(newOpenMenus);
+  }, [location.pathname]);
 
   const toggleSubmenu = (menuName) => {
     setOpenMenus(prev => ({
@@ -26,6 +62,19 @@ const Sidebar = ({ isOpen }) => {
       icon: 'bi-speedometer2',
       path: '/dashboard',
       key: 'dashboard'
+    },
+    {
+      title: 'Students',
+      icon: 'bi-people-fill',
+      key: 'students',
+      submenu: [
+        { title: 'All Students', path: '/students', icon: 'bi-person-vcard' },
+        { title: 'Add Student', path: '/students/add', icon: 'bi-person-plus' },
+        { title: 'Academic Records', path: '/students/academic-records', icon: 'bi-journal-bookmark-fill' },
+        { title: 'Attendance', path: '/students/attendance', icon: 'bi-calendar-check' },
+        { title: 'Fee Management', path: '/students/fees', icon: 'bi-calculator' },
+        { title: 'Parents', path: '/students/parents', icon: 'bi-people' }
+      ]
     },
     {
       title: 'Library',
@@ -88,7 +137,7 @@ const Sidebar = ({ isOpen }) => {
       submenu: [
         { title: 'Vehicles', path: '/transport/vehicles', icon: 'bi-truck' },
         { title: 'Routes', path: '/transport/routes', icon: 'bi-map' },
-        { title: 'Students', path: '/transport/students', icon: 'bi-person-walking' },
+        { title: 'Student Transport', path: '/transport/students', icon: 'bi-person-walking' },
         { title: 'GPS Tracking', path: '/transport/gps', icon: 'bi-geo-alt' }
       ]
     },
@@ -119,29 +168,27 @@ const Sidebar = ({ isOpen }) => {
             {item.submenu ? (
               <>
                 <div 
-                  className="nav-item" 
+                  className={`nav-item ${openMenus[item.key] ? 'open' : ''}`}
                   onClick={() => toggleSubmenu(item.key)}
                 >
                   <i className={`${item.icon} nav-icon`}></i>
                   <span>{item.title}</span>
                   <i className={`bi bi-chevron-${openMenus[item.key] ? 'down' : 'right'} submenu-toggle`}></i>
                 </div>
-                {openMenus[item.key] && (
-                  <div className="submenu">
-                    {item.submenu.map((subItem, idx) => (
-                      <NavLink 
-                        key={idx} 
-                        to={subItem.path} 
-                        className={({ isActive }) => 
-                          `nav-item ${isActive ? 'active' : ''}`
-                        }
-                      >
-                        <i className={`${subItem.icon} nav-icon`}></i>
-                        <span>{subItem.title}</span>
-                      </NavLink>
-                    ))}
-                  </div>
-                )}
+                <div className={`submenu ${openMenus[item.key] ? 'open' : ''}`}>
+                  {item.submenu.map((subItem, idx) => (
+                    <NavLink 
+                      key={idx} 
+                      to={subItem.path} 
+                      className={({ isActive }) => 
+                        `nav-item ${isActive ? 'active' : ''}`
+                      }
+                    >
+                      <i className={`${subItem.icon} nav-icon`}></i>
+                      <span>{subItem.title}</span>
+                    </NavLink>
+                  ))}
+                </div>
               </>
             ) : (
               <NavLink 

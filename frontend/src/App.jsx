@@ -13,6 +13,15 @@ import Unauthorized from './pages/Unauthorized';
 // Dashboard
 import Dashboard from './pages/Dashboard/Dashboard';
 
+// Students Module
+import StudentsList from './pages/Students/StudentsList';
+import AddStudent from './pages/Students/AddStudent';
+import StudentDetails from './pages/Students/StudentDetails';
+import AcademicRecords from './pages/Students/AcademicRecords';
+import StudentAttendance from './pages/Students/StudentAttendance';
+import FeeManagement from './pages/Students/FeeManagement';
+import ParentsList from './pages/Students/ParentsList';
+
 // Library Module
 import BooksList from './pages/Library/BooksList';
 import BorrowingsList from './pages/Library/BorrowingsList';
@@ -45,7 +54,7 @@ import EmergencyContactsList from './pages/HealthCenter/EmergencyContactsList';
 // Transport Module
 import VehiclesList from './pages/Transport/VehiclesList';
 import RoutesList from './pages/Transport/RoutesList';
-import StudentAssignments from './pages/Transport/StudentAssignments';
+import StudentTransportAssignments from './pages/Transport/StudentAssignments';
 import GPSMonitoring from './pages/Transport/GPSMonitoring';
 
 // Assets Module
@@ -66,12 +75,45 @@ function AppContent() {
   useEffect(() => {
     // Update current page title based on route
     const path = location.pathname;
-    const pageName = path.split('/').filter(Boolean).pop() || 'Dashboard';
-    const formattedName = pageName
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-    setCurrentPage(formattedName || 'Dashboard');
+    let pageName = path.split('/').filter(Boolean).pop() || 'Dashboard';
+    
+    // Map routes to display names
+    const pageNames = {
+      'dashboard': 'Dashboard',
+      'students': 'Students',
+      'add': 'Add Student',
+      'academic-records': 'Academic Records',
+      'attendance': 'Attendance',
+      'fees': 'Fee Management',
+      'parents': 'Parents',
+      'books': 'Books',
+      'borrowing': 'Borrowings',
+      'returns': 'Returns',
+      'fines': 'Fines',
+      'employees': 'Employees',
+      'payroll': 'Payroll',
+      'leave': 'Leave Management',
+      'performance': 'Performance Reviews',
+      'requisitions': 'Requisitions',
+      'suppliers': 'Suppliers',
+      'orders': 'Purchase Orders',
+      'approvals': 'Approvals',
+      'items': 'Stock Items',
+      'stock-in': 'Stock In',
+      'stock-out': 'Stock Out',
+      'reports': 'Reports',
+      'records': 'Medical Records',
+      'visits': 'Clinic Visits',
+      'emergency': 'Emergency Contacts',
+      'vehicles': 'Vehicles',
+      'routes': 'Routes',
+      'gps': 'GPS Tracking',
+      'register': 'Asset Register',
+      'maintenance': 'Maintenance',
+      'depreciation': 'Depreciation'
+    };
+    
+    setCurrentPage(pageNames[pageName] || pageName.charAt(0).toUpperCase() + pageName.slice(1));
   }, [location]);
 
   const toggleSidebar = () => {
@@ -93,6 +135,15 @@ function AppContent() {
           {/* Dashboard */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
+
+          {/* Students Routes */}
+          <Route path="/students" element={<StudentsList />} />
+          <Route path="/students/add" element={<AddStudent />} />
+          <Route path="/students/:id" element={<StudentDetails />} />
+          <Route path="/students/academic-records" element={<AcademicRecords />} />
+          <Route path="/students/attendance" element={<StudentAttendance />} />
+          <Route path="/students/fees" element={<FeeManagement />} />
+          <Route path="/students/parents" element={<ParentsList />} />
 
           {/* Library Routes */}
           <Route path="/library/books" element={<BooksList />} />
@@ -126,7 +177,7 @@ function AppContent() {
           {/* Transport Routes */}
           <Route path="/transport/vehicles" element={<VehiclesList />} />
           <Route path="/transport/routes" element={<RoutesList />} />
-          <Route path="/transport/students" element={<StudentAssignments />} />
+          <Route path="/transport/students" element={<StudentTransportAssignments />} />
           <Route path="/transport/gps" element={<GPSMonitoring />} />
 
           {/* Assets Routes */}

@@ -45,6 +45,7 @@ app.use('/api/health', healthRoutes);
 app.use('/api/transport', transportRoutes);
 app.use('/api/assets', assetsRoutes);
 app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/students', require('./routes/students'));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
