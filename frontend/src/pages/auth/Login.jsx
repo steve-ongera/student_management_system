@@ -125,7 +125,7 @@ const Login = () => {
             <div className="auth-logo">
               <i className="bi bi-mortarboard-fill"></i>
             </div>
-            <h1 className="auth-title">StudentSys</h1>
+            <h1 className="auth-title">Student MIS</h1>
             <p className="auth-subtitle">School Management System</p>
           </div>
 
@@ -222,31 +222,12 @@ const Login = () => {
           </form>
 
           {/* Demo Credentials */}
-          <div className="auth-demo">
-            <p className="auth-demo-title">Demo Credentials</p>
-            <div className="auth-demo-grid">
-              <div className="auth-demo-item">
-                <i className="bi bi-person-badge"></i>
-                <div>
-                  <div>Admin</div>
-                  <small>admin@studentsys.com</small>
-                </div>
-              </div>
-              <div className="auth-demo-item">
-                <i className="bi bi-person"></i>
-                <div>
-                  <div>Staff</div>
-                  <small>staff@studentsys.com</small>
-                </div>
-              </div>
-            </div>
-            <p className="auth-demo-note">Password: <strong>password123</strong></p>
-          </div>
+          
 
           {/* Footer */}
           <div className="auth-footer">
-            <p>&copy; 2024 StudentSys. All rights reserved.</p>
-            <p>Developed by Steve Ongera</p>
+            <p>&copy; 2026 Student Management System. All rights reserved.</p>
+            <p>Developed by ICT</p>
           </div>
         </div>
       </div>
