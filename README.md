@@ -8,73 +8,44 @@ A comprehensive Student Management System built with **React**, **Node.js**, and
 
 ```text
 students-management-system/
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Sidebar.jsx
-│   │   │   └── Navbar.jsx
-│   │   │
-│   │   ├── pages/
-│   │   │   ├── Dashboard/
-│   │   │   │   └── Dashboard.jsx
-│   │   │   │
-│   │   │   ├── Library/
-│   │   │   │   ├── BooksList.jsx
-│   │   │   │   ├── BookForm.jsx
-│   │   │   │   ├── BorrowingsList.jsx
-│   │   │   │   ├── ReturnsList.jsx
-│   │   │   │   └── FinesList.jsx
-│   │   │   │
-│   │   │   ├── HumanResources/
-│   │   │   │   ├── EmployeesList.jsx
-│   │   │   │   ├── EmployeeForm.jsx
-│   │   │   │   ├── PayrollList.jsx
-│   │   │   │   ├── LeaveRequests.jsx
-│   │   │   │   └── PerformanceReviews.jsx
-│   │   │   │
-│   │   │   ├── Procurement/
-│   │   │   │   ├── RequisitionsList.jsx
-│   │   │   │   ├── SuppliersList.jsx
-│   │   │   │   ├── PurchaseOrdersList.jsx
-│   │   │   │   └── ApprovalsList.jsx
-│   │   │   │
-│   │   │   ├── Inventory/
-│   │   │   │   ├── StockItemsList.jsx
-│   │   │   │   ├── StockInForm.jsx
-│   │   │   │   ├── StockOutForm.jsx
-│   │   │   │   └── InventoryReports.jsx
-│   │   │   │
-│   │   │   ├── HealthCenter/
-│   │   │   │   ├── MedicalRecordsList.jsx
-│   │   │   │   ├── ClinicVisitsList.jsx
-│   │   │   │   └── EmergencyContactsList.jsx
-│   │   │   │
-│   │   │   ├── Transport/
-│   │   │   │   ├── VehiclesList.jsx
-│   │   │   │   ├── RoutesList.jsx
-│   │   │   │   ├── StudentAssignments.jsx
-│   │   │   │   └── GPSMonitoring.jsx
-│   │   │   │
-│   │   │   └── Assets/
-│   │   │       ├── AssetsList.jsx
-│   │   │       ├── MaintenanceList.jsx
-│   │   │       ├── DepreciationReport.jsx
-│   │   │       └── AssetReports.jsx
-│   │   │
-│   │   ├── styles/
-│   │   │   └── main.css
-│   │   │
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   │
-│   └── package.json
 │
 ├── backend/
 │   ├── config/
+│   │      database.js
+│   │      db.js
+│   │
 │   ├── controllers/
+│   │      assetsController.js
+│   │      authController.js
+│   │      dashboardController.js
+│   │      healthController.js
+│   │      hrController.js
+│   │      inventoryController.js
+│   │      libraryController.js
+│   │      procurementController.js
+│   │      transportController.js
+│   │
 │   ├── middleware/
+│   │      authMiddleware.js
+│   │      errorMiddleware.js
+│   │
 │   ├── models/
+│   │      Asset.js
+│   │      Employee.js
+│   │      Student.js
+│   │      User.js
+│   │
 │   ├── routes/
+│   │      assetRoutes.js
+│   │      authRoutes.js
+│   │      dashboardRoutes.js
+│   │      healthRoutes.js
+│   │      hrRoutes.js
+│   │      inventoryRoutes.js
+│   │      libraryRoutes.js
+│   │      procurementRoutes.js
+│   │      transportRoutes.js
+│   │
 │   ├── server.js
 │   ├── .env
 │   └── package.json
@@ -82,11 +53,86 @@ students-management-system/
 ├── database/
 │   └── schema.sql
 │
+├── frontend/
+│   ├── public/
+│   │      index.html
+│   │
+│   ├── src/
+│   │   ├── App.css
+│   │   ├── App.jsx
+│   │   ├── index.css
+│   │   ├── main.jsx
+│   │
+│   │   ├── assets/
+│   │   │      hero.png
+│   │   │      react.svg
+│   │   │      vite.svg
+│   │   │
+│   │   ├── components/
+│   │   │      Navbar.jsx
+│   │   │      Sidebar.jsx
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── Assets/
+│   │   │   │      AssetReports.jsx
+│   │   │   │      AssetsList.jsx
+│   │   │   │      DepreciationReport.jsx
+│   │   │   │      MaintenanceList.jsx
+│   │   │   │
+│   │   │   ├── Dashboard/
+│   │   │   │      Dashboard.jsx
+│   │   │   │
+│   │   │   ├── HealthCenter/
+│   │   │   │      ClinicVisitsList.jsx
+│   │   │   │      EmergencyContactsList.jsx
+│   │   │   │      MedicalRecordsList.jsx
+│   │   │   │
+│   │   │   ├── HumanResources/
+│   │   │   │      EmployeeForm.jsx
+│   │   │   │      EmployeesList.jsx
+│   │   │   │      LeaveRequests.jsx
+│   │   │   │      PayrollList.jsx
+│   │   │   │      PerformanceReviews.jsx
+│   │   │   │
+│   │   │   ├── Inventory/
+│   │   │   │      InventoryReports.jsx
+│   │   │   │      StockInForm.jsx
+│   │   │   │      StockItemsList.jsx
+│   │   │   │      StockOutForm.jsx
+│   │   │   │
+│   │   │   ├── Library/
+│   │   │   │      BookForm.jsx
+│   │   │   │      BooksList.jsx
+│   │   │   │      BorrowingsList.jsx
+│   │   │   │      FinesList.jsx
+│   │   │   │      ReturnsList.jsx
+│   │   │   │
+│   │   │   ├── Procurement/
+│   │   │   │      ApprovalsList.jsx
+│   │   │   │      PurchaseOrdersList.jsx
+│   │   │   │      RequisitionsList.jsx
+│   │   │   │      SuppliersList.jsx
+│   │   │   │
+│   │   │   └── Transport/
+│   │   │          GPSMonitoring.jsx
+│   │   │          RoutesList.jsx
+│   │   │          StudentAssignments.jsx
+│   │   │          VehiclesList.jsx
+│   │   │
+│   │   ├── services/
+│   │   │      api.js
+│   │   │      apiHelper.js
+│   │   │
+│   │   └── styles/
+│   │          main.css
+│   │
+│   ├── package.json
+│   └── vite.config.js
+│
 ├── .gitignore
 ├── README.md
 └── package.json
 ```
-
 
 ---
 
