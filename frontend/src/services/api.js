@@ -1,6 +1,7 @@
 // frontend/src/services/api.js
 import axios from 'axios';
 
+// Make sure API_BASE_URL includes /api prefix
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 // Create axios instance with default config
@@ -11,6 +12,7 @@ const api = axios.create({
     'Content-Type': 'application/json',
     'Accept': 'application/json',
   },
+  withCredentials: false, // Set to true if using cookies for auth
 });
 
 // Request interceptor to add auth token
@@ -23,7 +25,7 @@ api.interceptors.request.use(
     
     // Log request in development
     if (import.meta.env.DEV) {
-      console.log(`[API Request] ${config.method.toUpperCase()} ${config.url}`, config.data);
+      console.log(`[API Request] ${config.method.toUpperCase()} ${config.baseURL}${config.url}`, config.data);
     }
     
     return config;
@@ -61,7 +63,10 @@ api.interceptors.response.use(
           console.error('Forbidden: You do not have permission to access this resource');
           break;
         case 404:
-          console.error('Resource not found');
+          console.error(`Resource not found: ${error.config?.url}`);
+          break;
+        case 422:
+          console.error('Validation error:', data?.errors);
           break;
         case 500:
           console.error('Server error occurred');
@@ -73,14 +78,15 @@ api.interceptors.response.use(
       return Promise.reject({
         status,
         message: data?.message || 'An error occurred',
-        data: data
+        data: data,
+        errors: data?.errors || null
       });
     } else if (error.request) {
       // Request was made but no response received
-      console.error('Network Error: No response from server');
+      console.error('Network Error: No response from server. Make sure backend is running on port 5000');
       return Promise.reject({
         status: 0,
-        message: 'Network error. Please check your connection.',
+        message: 'Network error. Please check if the backend server is running on http://localhost:5000',
         data: null
       });
     } else {
@@ -107,32 +113,66 @@ export const authAPI = {
   resetPassword: (token, password) => api.post('/auth/reset-password', { token, password }),
 };
 
+// ==================== STUDENTS API ====================
+export const studentsAPI = {
+  getStudents: (params) => api.get('/students', { params }),
+  getStudent: (id) => api.get(`/students/${id}`),
+  getStudentByAdmission: (admissionNumber) => api.get(`/students/admission/${admissionNumber}`),
+  createStudent: (data) => api.post('/students', data),
+  updateStudent: (id, data) => api.put(`/students/${id}`, data),
+  deleteStudent: (id) => api.delete(`/students/${id}`),
+  getStudentStats: () => api.get('/students/stats'),
+  getStudentsByClass: (className) => api.get(`/students/class/${className}`),
+  searchStudents: (query) => api.get(`/students/search/${query}`),
+  
+  // Academic Records
+  getAcademicRecords: (studentId) => api.get(`/students/${studentId}/academic-records`),
+  addAcademicRecord: (studentId, data) => api.post(`/students/${studentId}/academic-records`, data),
+  
+  // Attendance
+  getAttendance: (studentId, params) => api.get(`/students/${studentId}/attendance`, { params }),
+  markAttendance: (studentId, data) => api.post(`/students/${studentId}/attendance`, data),
+  
+  // Fees
+  getFeeRecords: (studentId) => api.get(`/students/${studentId}/fees`),
+  payFees: (studentId, data) => api.post(`/students/${studentId}/fees/pay`, data),
+  getFeeBalance: (studentId) => api.get(`/students/${studentId}/fees/balance`),
+  
+  // Parents
+  getParents: (studentId) => api.get(`/students/${studentId}/parents`),
+  addParent: (studentId, data) => api.post(`/students/${studentId}/parents`, data),
+};
+
 // ==================== LIBRARY API ====================
 export const libraryAPI = {
   // Books
   getBooks: (params) => api.get('/library/books', { params }),
   getBook: (id) => api.get(`/library/books/${id}`),
+  getBookByISBN: (isbn) => api.get(`/library/books/isbn/${isbn}`),
   createBook: (data) => api.post('/library/books', data),
   updateBook: (id, data) => api.put(`/library/books/${id}`, data),
   deleteBook: (id) => api.delete(`/library/books/${id}`),
   searchBooks: (query) => api.get('/library/books/search', { params: { q: query } }),
+  getBookCategories: () => api.get('/library/books/categories'),
+  getBookStats: () => api.get('/library/books/stats'),
   
   // Borrowing
   getBorrowings: (params) => api.get('/library/borrowing', { params }),
   getBorrowing: (id) => api.get(`/library/borrowing/${id}`),
   createBorrowing: (data) => api.post('/library/borrowing', data),
   getActiveBorrowings: () => api.get('/library/borrowing/active'),
-  getUserBorrowings: (userId) => api.get(`/library/borrowing/user/${userId}`),
+  getStudentBorrowings: (studentId) => api.get(`/library/borrowing/student/${studentId}`),
   
   // Returns
-  returnBook: (id, data) => api.post(`/library/returns/${id}`, data),
+  returnBook: (id) => api.post(`/library/returns/${id}`),
   getReturns: (params) => api.get('/library/returns', { params }),
   
   // Fines
   getFines: (params) => api.get('/library/fines', { params }),
-  getUserFines: (userId) => api.get(`/library/fines/user/${userId}`),
-  payFine: (id) => api.post(`/library/fines/${id}/pay`),
+  getStudentFines: (studentId) => api.get(`/library/fines/student/${studentId}`),
+  payFine: (id, data) => api.post(`/library/fines/${id}/pay`, data),
   waiveFine: (id, reason) => api.post(`/library/fines/${id}/waive`, { reason }),
+  getFineSummary: () => api.get('/library/fines/summary'),
   
   // Reports
   getLibraryReport: (type, params) => api.get(`/library/reports/${type}`, { params }),
@@ -143,6 +183,7 @@ export const hrAPI = {
   // Employees
   getEmployees: (params) => api.get('/hr/employees', { params }),
   getEmployee: (id) => api.get(`/hr/employees/${id}`),
+  getEmployeeByEmployeeId: (employeeId) => api.get(`/hr/employees/employee/${employeeId}`),
   createEmployee: (data) => api.post('/hr/employees', data),
   updateEmployee: (id, data) => api.put(`/hr/employees/${id}`, data),
   deleteEmployee: (id) => api.delete(`/hr/employees/${id}`),
@@ -383,6 +424,12 @@ export const settingsAPI = {
   updateBackupSettings: (data) => api.put('/settings/backup', data),
   createBackup: () => api.post('/settings/backup/create'),
   getAuditLogs: (params) => api.get('/settings/audit', { params }),
+};
+
+// ==================== TEST CONNECTION ====================
+export const testAPI = {
+  checkConnection: () => api.get('/'),
+  checkAuth: () => api.get('/auth/check'),
 };
 
 // Export main api instance for custom requests
