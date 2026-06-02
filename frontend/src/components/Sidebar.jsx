@@ -3,7 +3,15 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const Sidebar = ({ isOpen }) => {
-  const [openMenus, setOpenMenus] = useState({});
+  const [openMenus, setOpenMenus] = useState({
+    library: false,
+    hr: false,
+    procurement: false,
+    inventory: false,
+    health: false,
+    transport: false,
+    assets: false
+  });
 
   const toggleSubmenu = (menuName) => {
     setOpenMenus(prev => ({
@@ -17,12 +25,12 @@ const Sidebar = ({ isOpen }) => {
       title: 'Dashboard',
       icon: 'bi-speedometer2',
       path: '/dashboard',
-      submenu: null
+      key: 'dashboard'
     },
     {
       title: 'Library',
       icon: 'bi-book',
-      path: '/library',
+      key: 'library',
       submenu: [
         { title: 'Books', path: '/library/books', icon: 'bi-journal-bookmark-fill' },
         { title: 'Borrowing', path: '/library/borrowing', icon: 'bi-arrow-left-right' },
@@ -33,7 +41,7 @@ const Sidebar = ({ isOpen }) => {
     {
       title: 'Human Resources',
       icon: 'bi-people',
-      path: '/hr',
+      key: 'hr',
       submenu: [
         { title: 'Employees', path: '/hr/employees', icon: 'bi-person-badge' },
         { title: 'Payroll', path: '/hr/payroll', icon: 'bi-calculator' },
@@ -44,7 +52,7 @@ const Sidebar = ({ isOpen }) => {
     {
       title: 'Procurement',
       icon: 'bi-cart',
-      path: '/procurement',
+      key: 'procurement',
       submenu: [
         { title: 'Requisitions', path: '/procurement/requisitions', icon: 'bi-file-text' },
         { title: 'Suppliers', path: '/procurement/suppliers', icon: 'bi-truck' },
@@ -55,7 +63,7 @@ const Sidebar = ({ isOpen }) => {
     {
       title: 'Inventory',
       icon: 'bi-box-seam',
-      path: '/inventory',
+      key: 'inventory',
       submenu: [
         { title: 'Stock Items', path: '/inventory/items', icon: 'bi-cubes' },
         { title: 'Stock In', path: '/inventory/stock-in', icon: 'bi-arrow-down-circle' },
@@ -66,7 +74,7 @@ const Sidebar = ({ isOpen }) => {
     {
       title: 'Health Center',
       icon: 'bi-hospital',
-      path: '/health',
+      key: 'health',
       submenu: [
         { title: 'Medical Records', path: '/health/records', icon: 'bi-file-medical' },
         { title: 'Clinic Visits', path: '/health/visits', icon: 'bi-activity' },
@@ -76,7 +84,7 @@ const Sidebar = ({ isOpen }) => {
     {
       title: 'Transport',
       icon: 'bi-bus-front',
-      path: '/transport',
+      key: 'transport',
       submenu: [
         { title: 'Vehicles', path: '/transport/vehicles', icon: 'bi-truck' },
         { title: 'Routes', path: '/transport/routes', icon: 'bi-map' },
@@ -87,7 +95,7 @@ const Sidebar = ({ isOpen }) => {
     {
       title: 'Assets',
       icon: 'bi-building',
-      path: '/assets',
+      key: 'assets',
       submenu: [
         { title: 'Asset Register', path: '/assets/register', icon: 'bi-clipboard-data' },
         { title: 'Maintenance', path: '/assets/maintenance', icon: 'bi-tools' },
@@ -106,25 +114,27 @@ const Sidebar = ({ isOpen }) => {
         </h3>
       </div>
       <div className="sidebar-nav">
-        {menuItems.map((item, index) => (
-          <div key={index} className="nav-section">
+        {menuItems.map((item) => (
+          <div key={item.key} className="nav-section">
             {item.submenu ? (
               <>
                 <div 
                   className="nav-item" 
-                  onClick={() => toggleSubmenu(item.title)}
+                  onClick={() => toggleSubmenu(item.key)}
                 >
                   <i className={`${item.icon} nav-icon`}></i>
                   <span>{item.title}</span>
-                  <i className={`bi bi-chevron-${openMenus[item.title] ? 'down' : 'right'} submenu-toggle`}></i>
+                  <i className={`bi bi-chevron-${openMenus[item.key] ? 'down' : 'right'} submenu-toggle`}></i>
                 </div>
-                {openMenus[item.title] && (
+                {openMenus[item.key] && (
                   <div className="submenu">
-                    {item.submenu.map((subItem, subIndex) => (
+                    {item.submenu.map((subItem, idx) => (
                       <NavLink 
-                        key={subIndex} 
+                        key={idx} 
                         to={subItem.path} 
-                        className="nav-item"
+                        className={({ isActive }) => 
+                          `nav-item ${isActive ? 'active' : ''}`
+                        }
                       >
                         <i className={`${subItem.icon} nav-icon`}></i>
                         <span>{subItem.title}</span>
@@ -134,7 +144,12 @@ const Sidebar = ({ isOpen }) => {
                 )}
               </>
             ) : (
-              <NavLink to={item.path} className="nav-item">
+              <NavLink 
+                to={item.path} 
+                className={({ isActive }) => 
+                  `nav-item ${isActive ? 'active' : ''}`
+                }
+              >
                 <i className={`${item.icon} nav-icon`}></i>
                 <span>{item.title}</span>
               </NavLink>
