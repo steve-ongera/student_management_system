@@ -1,8 +1,14 @@
 // frontend/src/App.jsx
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { useAuth } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
+
+// Auth Pages
+import Login from './pages/auth/Login';
+import Unauthorized from './pages/Unauthorized';
 
 // Dashboard
 import Dashboard from './pages/Dashboard/Dashboard';
@@ -51,10 +57,11 @@ import AssetReports from './pages/Assets/AssetReports';
 import './styles/main.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-function App() {
+function AppContent() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState('Dashboard');
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     // Update current page title based on route
@@ -71,6 +78,11 @@ function App() {
     setSidebarOpen(!sidebarOpen);
   };
 
+  // If not authenticated, don't show sidebar/navbar
+  if (!isAuthenticated) {
+    return null;
+  }
+
   return (
     <div className="app-container">
       <Sidebar isOpen={sidebarOpen} />
@@ -79,7 +91,7 @@ function App() {
         
         <Routes>
           {/* Dashboard */}
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="/dashboard" element={<Dashboard />} />
 
           {/* Library Routes */}
@@ -125,6 +137,23 @@ function App() {
         </Routes>
       </div>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/unauthorized" element={<Unauthorized />} />
+      <Route
+        path="/*"
+        element={
+          <ProtectedRoute>
+            <AppContent />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
   );
 }
 

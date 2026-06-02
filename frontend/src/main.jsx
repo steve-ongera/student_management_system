@@ -2,20 +2,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import App from './App';
 import { AuthProvider } from './context/AuthContext';
+import App from './App';
 import './styles/main.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-// Global API configuration
+// API Configuration
 export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
-
+// Global error handler for unhandled promise rejections
 window.addEventListener('unhandledrejection', (event) => {
   console.error('Unhandled Promise Rejection:', event.reason);
-
 });
 
+// Global error handler for runtime errors
 window.addEventListener('error', (event) => {
   console.error('Runtime Error:', event.error);
 });
